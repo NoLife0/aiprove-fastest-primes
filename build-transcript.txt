@@ -1,0 +1,110 @@
+=== build transcript: fastest-primes ===
+$ cp challenges/fastest-primes/{README.md->SPEC.md,cases.json} into repo/
+total 12
+drwxrws--- 1 root nogroup  74 Nov 14 15:08 .
+drwxrws--- 1 root nogroup   8 Nov 14 15:08 ..
+-rw-rw---- 1 root nogroup 429 Nov 14 15:08 SPEC.md
+-rw-rw---- 1 root nogroup 115 Nov 14 15:08 build-transcript.txt
+-rw-rw---- 1 root nogroup 121 Nov 14 15:08 cases.json
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+v24.22.1
+$ gcc -O3 -march=native -std=c11 -o primes primes.c
+build OK
+$ smoke: echo 10 | ./primes ; echo 5000000 | ./primes
+4
+348513
+$ echo 5000000 | ./run.sh   (grader run command)
+348513
+$ python3 test_bench.py 9
+OK  pi(10) = 4 (want 4)  [1.87 ms]
+OK  pi(100) = 25 (want 25)  [1.75 ms]
+OK  pi(1000) = 168 (want 168)  [1.31 ms]
+OK  pi(100000) = 9592 (want 9592)  [1.15 ms]
+OK  pi(1000000) = 78498 (want 78498)  [1.88 ms]
+OK  pi(1) = 0 (want 0)  [1.06 ms]
+OK  pi(2) = 1 (want 1)  [0.88 ms]
+OK  pi(3) = 2 (want 2)  [0.88 ms]
+OK  pi(4) = 2 (want 2)  [0.80 ms]
+OK  pi(5) = 3 (want 3)  [0.80 ms]
+OK  pi(6) = 3 (want 3)  [0.90 ms]
+OK  pi(7) = 4 (want 4)  [0.82 ms]
+OK  pi(97) = 25 (want 25)  [0.75 ms]
+OK  pi(541) = 100 (want 100)  [0.73 ms]
+OK  pi(10000) = 1229 (want 1229)  [0.87 ms]
+OK  pi(100000) = 9592 (want 9592)  [0.86 ms]
+OK  pi(1000000) = 78498 (want 78498)  [1.70 ms]
+OK  pi(2000000) = 148933 (want 148933)  [2.70 ms]
+OK  pi(3000000) = 216816 (want 216816)  [5.13 ms]
+OK  pi(4000000) = 283146 (want 283146)  [5.65 ms]
+OK  pi(5000000) = 348513 (want 348513)  [6.51 ms]
+
+benchmark: N=5000000, repeated runs (process start + sieve + print)
+  run 1: 6.514 ms
+  run 2: 6.246 ms
+  run 3: 6.492 ms
+  run 4: 6.333 ms
+  run 5: 6.271 ms
+  run 6: 6.591 ms
+  run 7: 7.268 ms
+  run 8: 6.271 ms
+  run 9: 7.020 ms
+min=6.246 ms  median=6.492 ms  max=7.268 ms
+CORRECTNESS: ALL OK
+exit=0
+$ adopt bit-packed sieve (beat byte sieve in head-to-head: median 5.63 ms vs 6.33 ms, 15 runs each, N=5000000)
+$ gcc -O3 -march=native -std=c11 -o primes primes.c
+build OK
+$ python3 test_bench.py 11   (full correctness + benchmark, final binary)
+OK  pi(10) = 4 (want 4)  [1.75 ms]
+OK  pi(100) = 25 (want 25)  [1.84 ms]
+OK  pi(1000) = 168 (want 168)  [1.63 ms]
+OK  pi(100000) = 9592 (want 9592)  [1.56 ms]
+OK  pi(1000000) = 78498 (want 78498)  [2.30 ms]
+OK  pi(1) = 0 (want 0)  [1.54 ms]
+OK  pi(2) = 1 (want 1)  [1.42 ms]
+OK  pi(3) = 2 (want 2)  [1.65 ms]
+OK  pi(4) = 2 (want 2)  [1.62 ms]
+OK  pi(5) = 3 (want 3)  [1.64 ms]
+OK  pi(6) = 3 (want 3)  [1.31 ms]
+OK  pi(7) = 4 (want 4)  [0.99 ms]
+OK  pi(97) = 25 (want 25)  [0.90 ms]
+OK  pi(541) = 100 (want 100)  [1.33 ms]
+OK  pi(10000) = 1229 (want 1229)  [1.20 ms]
+OK  pi(100000) = 9592 (want 9592)  [1.29 ms]
+OK  pi(1000000) = 78498 (want 78498)  [47.34 ms]
+OK  pi(2000000) = 148933 (want 148933)  [9.50 ms]
+OK  pi(3000000) = 216816 (want 216816)  [6.05 ms]
+OK  pi(4000000) = 283146 (want 283146)  [6.38 ms]
+OK  pi(5000000) = 348513 (want 348513)  [10.73 ms]
+
+benchmark: N=5000000, repeated runs (process start + sieve + print)
+  run 1: 11.721 ms
+  run 2: 8.763 ms
+  run 3: 42.776 ms
+  run 4: 7.404 ms
+  run 5: 6.722 ms
+  run 6: 6.153 ms
+  run 7: 6.259 ms
+  run 8: 7.163 ms
+  run 9: 9.182 ms
+  run 10: 6.952 ms
+  run 11: 53.614 ms
+min=6.153 ms  median=7.404 ms  max=53.614 ms
+CORRECTNESS: ALL OK
+exit=0
+$ hyperfine-style extra check via bash time: 5 runs at N=5000000
+/bin/bash: line 11: /usr/bin/time: No such file or directory
+/bin/bash: line 11: /usr/bin/time: No such file or directory
+/bin/bash: line 11: /usr/bin/time: No such file or directory
+/bin/bash: line 11: /usr/bin/time: No such file or directory
+/bin/bash: line 11: /usr/bin/time: No such file or directory
+$ clean benchmark round: 25 runs at N=5000000 (python subprocess timing, end-to-end)
+all 25 outputs == 348513
+times ms: 5.96 6.32 6.78 7.53 8.01 8.69 9.34 10.02 10.11 10.64 10.87 10.90 11.22 13.82 14.06 14.12 19.35 22.61 28.90 31.65 38.50 44.96 55.70 57.73 61.92
+min=5.963  p25=9.341  median=11.223  mean=20.788
+$ benchmark round after 25s pause: 15 runs at N=5000000
+all 15 outputs == 348513
+times ms: 6.31 6.50 6.55 7.15 9.01 10.39 11.98 12.38 13.10 15.73 16.77 17.25 51.14 51.55 58.78
+min=6.306  median=12.377  mean=19.639
+process-start floor at N=10: median=2.094 ms -> sieve-only at 5e6 approx median 10.283 ms
+$ git init + commit (fastest-primes)
