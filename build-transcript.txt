@@ -108,3 +108,4 @@ times ms: 6.31 6.50 6.55 7.15 9.01 10.39 11.98 12.38 13.10 15.73 16.77 17.25 51.
 min=6.306  median=12.377  mean=19.639
 process-start floor at N=10: median=2.094 ms -> sieve-only at 5e6 approx median 10.283 ms
 $ git init + commit (fastest-primes)
+86c7ad6 fastest-primes: bit-packed odd-only sieve in C, all pi(x) checks pass, ~5.6ms median at N=5e6
